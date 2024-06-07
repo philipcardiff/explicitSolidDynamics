@@ -68,10 +68,10 @@ int main(int argc, char *argv[])
     );
 
     // Test case name
-    const word& tutorial = runParameters.lookup("tutorial");
+    const word tutorial(runParameters.lookup("tutorial"));
 
     // Read density
-    const dimensionedScalar& rho = mechanicalProperties.lookup("rho");
+    const dimensionedScalar rho(mechanicalProperties.lookup("rho"));
 
     // Cell centre coordinates
     const volVectorField& C = mesh.C();

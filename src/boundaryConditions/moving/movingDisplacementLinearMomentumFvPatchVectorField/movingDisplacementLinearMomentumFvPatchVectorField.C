@@ -152,7 +152,8 @@ void movingDisplacementLinearMomentumFvPatchVectorField::write
     os.writeKeyword("density") << rho_ << token::END_STATEMENT << nl;
     os.writeKeyword("displacement") << uMax_ << token::END_STATEMENT << nl;
     os.writeKeyword("endTime") << tEnd_ << token::END_STATEMENT << nl;
-    writeEntry(os, "value", *this);
+    // writeEntry(os, "value", *this);
+    writeEntry("value", os);
 }
 
 

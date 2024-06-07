@@ -47,8 +47,10 @@ const scalar& beta =
     readScalar(fvSolution.lookup("incompressiblilityCoefficient"));
 
 // Angular momentum conservation
-const word& angularMomentumConservation =
-    fvSolution.lookup("angularMomentumConservation");
+const word angularMomentumConservation
+(
+    fvSolution.lookup("angularMomentumConservation")
+);
 
 if
 (
@@ -60,3 +62,15 @@ if
         << "for angularMomentumConservation"
         << abort(FatalError);
 }
+
+// Optional linear momentum damping coefficient
+const dimensionedScalar dampingCoeff
+(
+    fvSolution.lookupOrDefault<dimensionedScalar>
+    (
+        "dampingCoeff",
+        dimensionedScalar("0", dimless/dimTime, 0.0)
+    )
+);
+
+Info<< "dampingCoeff: " << dampingCoeff.value() << endl;

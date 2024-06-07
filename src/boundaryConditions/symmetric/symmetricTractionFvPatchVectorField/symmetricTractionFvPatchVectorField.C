@@ -150,7 +150,8 @@ void symmetricTractionFvPatchVectorField::write(Ostream& os) const
 {
     fvPatchVectorField::write(os);
     os.writeKeyword("traction") << t_P_ << token::END_STATEMENT << nl;
-    writeEntry(os, "value", *this);
+    writeEntry("value", os);
+    //writeEntry(os, "value", *this);
 }
 
 

@@ -1,4 +1,11 @@
 // Acoustic Riemann solver
+S_lm.oriented() = false;
+S_t.oriented() = false;
+t_M.oriented() = false;
+t_P.oriented() = false;
+lm_P.oriented() = false;
+lm_M.oriented() = false;
+
 tC = 0.5*(t_M+t_P) + (0.5*S_lm & (lm_P - lm_M));
 lmC = 0.5*(lm_M+lm_P) + (0.5*S_t & (t_P - t_M));
 
@@ -20,41 +27,41 @@ forAll(mesh.boundary(), patchi)
     // Riemann solver for inter-processor boundaries
     if (mesh.boundary()[patchi].coupled())
     {
-        const vectorField lm_nei =
-          lm.boundaryField()[patchi].patchNeighbourField().ref();
+        const vectorField lm_nei(
+          lm.boundaryField()[patchi].patchNeighbourField());
 
-        const tensorField P_nei =
-          P.boundaryField()[patchi].patchNeighbourField().ref();
+        const tensorField P_nei(
+          P.boundaryField()[patchi].patchNeighbourField());
 
-        const vectorField Px_nei =
-          Px.boundaryField()[patchi].patchNeighbourField().ref();
+        const vectorField Px_nei(
+          Px.boundaryField()[patchi].patchNeighbourField());
 
-        const vectorField Py_nei =
-          Py.boundaryField()[patchi].patchNeighbourField().ref();
+        const vectorField Py_nei(
+          Py.boundaryField()[patchi].patchNeighbourField());
 
-        const vectorField Pz_nei =
-          Pz.boundaryField()[patchi].patchNeighbourField().ref();
+        const vectorField Pz_nei(
+          Pz.boundaryField()[patchi].patchNeighbourField());
 
-        const tensorField lmGrad_nei =
-          lmGrad.boundaryField()[patchi].patchNeighbourField().ref();
+        const tensorField lmGrad_nei(
+          lmGrad.boundaryField()[patchi].patchNeighbourField());
 
-        const tensorField PxGrad_nei =
-          PxGrad.boundaryField()[patchi].patchNeighbourField().ref();
+        const tensorField PxGrad_nei(
+          PxGrad.boundaryField()[patchi].patchNeighbourField());
 
-        const tensorField PyGrad_nei =
-          PyGrad.boundaryField()[patchi].patchNeighbourField().ref();
+        const tensorField PyGrad_nei(
+          PyGrad.boundaryField()[patchi].patchNeighbourField());
 
-        const tensorField PzGrad_nei =
-          PzGrad.boundaryField()[patchi].patchNeighbourField().ref();
+        const tensorField PzGrad_nei(
+          PzGrad.boundaryField()[patchi].patchNeighbourField());
 
-        const vectorField C_nei =
-          C.boundaryField()[patchi].patchNeighbourField().ref();
+        const vectorField C_nei(
+          C.boundaryField()[patchi].patchNeighbourField());
 
-        const scalarField Up_nei =
-          Up.boundaryField()[patchi].patchNeighbourField().ref();
+        const scalarField Up_nei(
+          Up.boundaryField()[patchi].patchNeighbourField());
 
-        const scalarField Us_nei =
-          Us.boundaryField()[patchi].patchNeighbourField().ref();
+        const scalarField Us_nei(
+          Us.boundaryField()[patchi].patchNeighbourField());
 
         forAll(mesh.boundary()[patchi], facei)
         {

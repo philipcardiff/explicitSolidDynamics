@@ -68,6 +68,7 @@ SourceFiles
 #include "fixedValueFvPatchFields.H"
 #include "addToRunTimeSelectionTable.H"
 #include "surfaceFields.H"
+#include "interpolationTable.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -94,6 +95,8 @@ private:
     // Boundary pressure
     scalar p_P_;
 
+    //- Pressure time series
+    interpolationTable<scalar> pressureSeries_;
 
 public:
 

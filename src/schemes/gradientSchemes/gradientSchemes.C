@@ -103,8 +103,10 @@ void gradientSchemes::distanceMatrix
         {
             if (mesh_.boundary()[patchID].coupled())
             {
-                vectorField X_nei =
-                  X_.boundaryField()[patchID].patchNeighbourField().ref();
+                const vectorField X_nei
+                (
+                  X_.boundaryField()[patchID].patchNeighbourField()
+                );
 
                 forAll(mesh_.boundary()[patchID], facei)
                 {
@@ -239,11 +241,15 @@ volVectorField gradientSchemes::gradient
         {
             if (mesh_.boundary()[patchID].coupled())
             {
-                vectorField X_nei =
-                  X_.boundaryField()[patchID].patchNeighbourField().ref();
+                const vectorField X_nei
+                (
+                  X_.boundaryField()[patchID].patchNeighbourField()
+                );
 
-                scalarField U_nei =
-                  U.boundaryField()[patchID].patchNeighbourField().ref();
+                const scalarField U_nei
+                (
+                  U.boundaryField()[patchID].patchNeighbourField()
+                );
 
                 forAll(mesh_.boundary()[patchID], facei)
                 {

@@ -13,7 +13,7 @@ xF += deltaT*(lmC/rho);
 xN += deltaT*(lmN/rho);
 
 // Update linear momentum
-lm += deltaT*rhsLm;
+lm += deltaT*rhsLm - deltaT*dampingCoeff*lm;
 
 // Update deformation gradient tensor
 F += deltaT*fvc::surfaceIntegrate((lmC/rho)*Sf);

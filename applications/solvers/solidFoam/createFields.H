@@ -212,6 +212,12 @@ Info << "Creating fields for riemann solver ..." << endl;
 
 surfaceTensorField S_lm = mech.Smatrix_lm();
 surfaceTensorField S_t = mech.Smatrix_t();
+S_lm.oriented() = false;
+S_t.oriented() = false;
+t_M.oriented() = false;
+t_P.oriented() = false;
+lm_P.oriented() = false;
+lm_M.oriented() = false;
 
 // Contact traction
 surfaceVectorField tC = (0.5*(t_M + t_P) + (0.5*S_lm & (lm_P - lm_M))).ref();
@@ -230,7 +236,7 @@ volVectorField t_b
 );
 
 // Contact linear momentum
-surfaceVectorField lmC = (0.5*(lm_M + lm_P) + (0.5*S_t & (t_P - t_M))).ref();
+surfaceVectorField lmC(0.5*(lm_M + lm_P) + (0.5*S_t & (t_P - t_M)));
 
 volVectorField lm_b
 (

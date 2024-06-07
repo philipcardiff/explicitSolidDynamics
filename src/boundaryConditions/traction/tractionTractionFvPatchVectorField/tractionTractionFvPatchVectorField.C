@@ -42,7 +42,8 @@ tractionTractionFvPatchVectorField
     fixedValueFvPatchVectorField(p, iF),
     loadingType_("none"),
     t_P_(vector::zero),
-    p_P_(0.0)
+    p_P_(0.0),
+    pressureSeries_()
 {}
 
 
@@ -57,7 +58,8 @@ tractionTractionFvPatchVectorField
     fixedValueFvPatchVectorField(p, iF),
     loadingType_(dict.lookupOrDefault<word>("loadingType", "none")),
     t_P_(dict.lookupOrDefault("traction", vector::zero)),
-    p_P_(dict.lookupOrDefault("pressure", 0.0))
+    p_P_(dict.lookupOrDefault("pressure", 0.0)),
+    pressureSeries_(dict.subDict("pressureSeries"))
 {
     fvPatchVectorField::operator=(vectorField("value", dict, p.size()));
 
@@ -95,7 +97,8 @@ tractionTractionFvPatchVectorField
     fixedValueFvPatchVectorField(ptf, p, iF, mapper),
     loadingType_(ptf.loadingType_),
     t_P_(ptf.t_P_),
-    p_P_(ptf.p_P_)
+    p_P_(ptf.p_P_),
+    pressureSeries_(ptf.pressureSeries_)
 {}
 
 
@@ -108,7 +111,8 @@ tractionTractionFvPatchVectorField
     fixedValueFvPatchVectorField(rifvpvf),
     loadingType_(rifvpvf.loadingType_),
     t_P_(rifvpvf.t_P_),
-    p_P_(rifvpvf.p_P_)
+    p_P_(rifvpvf.p_P_),
+    pressureSeries_(rifvpvf.pressureSeries_)
 {}
 
 
@@ -122,7 +126,8 @@ tractionTractionFvPatchVectorField
     fixedValueFvPatchVectorField(rifvpvf, iF),
     loadingType_(rifvpvf.loadingType_),
     t_P_(rifvpvf.t_P_),
-    p_P_(rifvpvf.p_P_)
+    p_P_(rifvpvf.p_P_),
+    pressureSeries_(rifvpvf.pressureSeries_)
 {}
 
 
@@ -171,6 +176,8 @@ void tractionTractionFvPatchVectorField::updateCoeffs()
 
     else if (loadingType_ == "pressure")
     {
+        p_P_ = pressureSeries_(db().time().timeOutputValue());
+
         const fvsPatchField<vector>& n_
             = patch().lookupPatchField<surfaceVectorField, vector>("n");
 
@@ -197,7 +204,13 @@ void tractionTractionFvPatchVectorField::write(Ostream& os) const
         << nl;
     os.writeKeyword("traction") << t_P_ << token::END_STATEMENT << nl;
     os.writeKeyword("pressure") << p_P_ << token::END_STATEMENT << nl;
-    writeEntry(os, "value", *this);
+    // writeEntry(os, "value", *this);
+    writeEntry("value", os);
+
+    os.writeKeyword("pressureSeries") << nl;
+    os << token::BEGIN_BLOCK << nl;
+    pressureSeries_.write(os);
+    os << token::END_BLOCK << nl;
 }
 
 

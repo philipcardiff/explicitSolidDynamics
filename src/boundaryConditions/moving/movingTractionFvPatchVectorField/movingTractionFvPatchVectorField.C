@@ -136,7 +136,8 @@ void movingTractionFvPatchVectorField::write(Ostream& os) const
 {
     fvPatchVectorField::write(os);
     os.writeKeyword("lm_P_") << lm_P_ << token::END_STATEMENT << nl;
-    writeEntry(os, "value", *this);
+    // writeEntry(os, "value", *this);
+    writeEntry("value", os);
 }
 
 
